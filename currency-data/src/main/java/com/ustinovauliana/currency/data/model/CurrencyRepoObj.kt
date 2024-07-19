@@ -8,6 +8,5 @@ data class CurrencyRepoObj (
 )
 
 data class CurrencyProperties(
-    val code : String,
     val value: Float
 )

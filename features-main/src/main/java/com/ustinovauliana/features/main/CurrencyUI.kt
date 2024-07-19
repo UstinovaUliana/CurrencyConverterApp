@@ -1,5 +1,8 @@
 package com.ustinovauliana.features.main
 
 internal class CurrencyUI(
-    val value: Float
+    val rubValue: Float,
+    val eurValue: Float,
+    val usdValue: Float,
+    val gbpValue: Float,
 )

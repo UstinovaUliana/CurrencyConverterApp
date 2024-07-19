@@ -1,6 +1,7 @@
 package com.ustinovauliana.currency.api
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.skydoves.retrofit.adapters.result.ResultCallAdapterFactory
 import com.ustinovauliana.currency.api.models.ResponseDTO
 import com.ustinovauliana.currency.api.utils.CurrencyApiKeyInterceptor
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -15,8 +16,8 @@ interface CurrencyApi {
     @GET("latest")
     suspend fun getLatest(
         @Query("currencies") currency: String,
-        @Query("base_currency") baseCurrency: String?,
-    ) : ResponseDTO
+        @Query("base_currency") baseCurrency: String? = null,
+    ) : Result<ResponseDTO>
 }
 
 fun CurrencyApi(
@@ -28,6 +29,7 @@ fun CurrencyApi(
     return retrofit(baseUrl, apiKey, okHttpClient, json).create(CurrencyApi::class.java)
 }
 
+
 @OptIn(ExperimentalSerializationApi::class)
 private fun retrofit(
     baseUrl: String,
@@ -35,6 +37,7 @@ private fun retrofit(
     okHttpClient: OkHttpClient?,
     json: Json,
 ): Retrofit {
+
     val modifiedOkHttpClient: OkHttpClient = (okHttpClient?.newBuilder() ?: OkHttpClient.Builder())
         .addInterceptor(CurrencyApiKeyInterceptor(apiKey))
         .build()
@@ -42,6 +45,7 @@ private fun retrofit(
     return Retrofit.Builder()
         .baseUrl(baseUrl)
         .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        .addCallAdapterFactory(ResultCallAdapterFactory.create())
         .client(modifiedOkHttpClient)
         .build()
 }

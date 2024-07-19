@@ -21,6 +21,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,7 +47,8 @@ fun ConverterMainScreen() {
 @Composable
 internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel) {
 
-   // val state by currencyViewModel.state.collectAsState()
+    val state by currencyViewModel.state.collectAsState()
+
     var amount: String by rememberSaveable {
         mutableStateOf("")
     }
@@ -156,11 +158,19 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel) 
         }
 
         Button(onClick = {
-            /*
-            currencyViewModel.getCurrencyValue(baseCurrency =  firstCurrencyText, currency = secondCurrencyText)
+            currencyViewModel.getCurrencyValue(
+                baseCurrency = if (firstCurrencyText == "USD") null else firstCurrencyText,
+                currency = secondCurrencyText)
+            val k: Float = if(state.currency!=null) {
+                when (secondCurrencyText) {
+                    "RUB" -> state.currency!!.rubValue
+                    "EUR" -> state.currency!!.eurValue
+                    "GBP" -> state.currency!!.gbpValue
+                    else -> state.currency!!.usdValue
+                }
+            } else 0.25f
+            result = (amount.toFloat()*k).toString()
 
-             */
-            result = (amount.toFloat()*0.333).toString()
         },) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -183,8 +193,31 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel) 
             }
         }
 
-        Text(if (result !="") result else "summ",
-            textAlign = TextAlign.Center,)
-        Spacer(Modifier.size(100.dp))
+        when (state) {
+            is State.Success -> {
+                val k: Float =
+                    when (secondCurrencyText) {
+                        "RUB" -> state.currency!!.rubValue
+                        "EUR" -> state.currency!!.eurValue
+                        "GBP" -> state.currency!!.gbpValue
+                        else -> state.currency!!.usdValue
+                    }
+
+                result = (amount.toFloat() * k).toString()
+                Text(
+                    if (result != "") result else secondCurrencyText,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(Modifier.size(100.dp))
+            }
+            else -> {
+                Text(
+                    "Getting data",
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(Modifier.size(100.dp))
+            }
+        }
+
     }
 }
