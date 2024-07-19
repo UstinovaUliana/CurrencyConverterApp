@@ -50,7 +50,7 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel) 
     val state by currencyViewModel.state.collectAsState()
 
     var amount: String by rememberSaveable {
-        mutableStateOf("")
+        mutableStateOf("100")
     }
     var result: String by remember { mutableStateOf("") }
     var isFirstExpanded by remember { mutableStateOf(false) }
@@ -161,15 +161,7 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel) 
             currencyViewModel.getCurrencyValue(
                 baseCurrency = if (firstCurrencyText == "USD") null else firstCurrencyText,
                 currency = secondCurrencyText)
-            val k: Float = if(state.currency!=null) {
-                when (secondCurrencyText) {
-                    "RUB" -> state.currency!!.rubValue
-                    "EUR" -> state.currency!!.eurValue
-                    "GBP" -> state.currency!!.gbpValue
-                    else -> state.currency!!.usdValue
-                }
-            } else 0.25f
-            result = (amount.toFloat()*k).toString()
+
 
         },) {
             Column(
@@ -195,15 +187,13 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel) 
 
         when (state) {
             is State.Success -> {
-                val k: Float =
-                    when (secondCurrencyText) {
-                        "RUB" -> state.currency!!.rubValue
-                        "EUR" -> state.currency!!.eurValue
-                        "GBP" -> state.currency!!.gbpValue
-                        else -> state.currency!!.usdValue
-                    }
-
-                result = (amount.toFloat() * k).toString()
+                var k: Float? = if(state.currencyMap!=null) {
+                    val map = state.currencyMap
+                    map?.get(secondCurrencyText)?.value
+                }
+                    else 0.25f
+                if (k==null) k=1f
+                result = (amount.toFloat()*k).toString()
                 Text(
                     if (result != "") result else secondCurrencyText,
                     textAlign = TextAlign.Center,

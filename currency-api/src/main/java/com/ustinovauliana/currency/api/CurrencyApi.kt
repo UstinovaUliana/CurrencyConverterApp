@@ -8,6 +8,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -17,7 +18,7 @@ interface CurrencyApi {
     suspend fun getLatest(
         @Query("currencies") currency: String,
         @Query("base_currency") baseCurrency: String? = null,
-    ) : Result<ResponseDTO>
+    ) : ResponseDTO
 }
 
 fun CurrencyApi(

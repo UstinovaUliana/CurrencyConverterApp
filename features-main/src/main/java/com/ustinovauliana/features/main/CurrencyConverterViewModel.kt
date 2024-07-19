@@ -25,24 +25,23 @@ internal class CurrencyConverterViewModel @Inject constructor(
         state = getCurrencyValueUseCase.get().invoke(currency = currency, baseCurrency = baseCurrency)
             .map { it.toState() }
             .stateIn(viewModelScope, SharingStarted.Lazily, State.None)
-        Log.d("curdebug", "ViewModel: requestResult" + state.value.currency)
+        Log.d("curdebug", "ViewModel: requestResult" + state.value)
     }
 }
 
 
 
-private fun RequestResult<CurrencyUI>.toState(): State {
+private fun Map<String,CurrencyUI>.toState(): State {
     return when (this) {
-        is RequestResult.Success -> State.Success(data)
-        is RequestResult.Error -> State.Error(data)
-        is RequestResult.InProgress -> State.Loading(data)
+        checkNotNull(this) -> State.Success(this)
+        else -> State.Loading(this)
     }
 }
 
-internal sealed class State(val currency: CurrencyUI?) {
+internal sealed class State(val currencyMap: Map<String,CurrencyUI>?) {
 
-    data object None : State(currency = null)
-    class Loading(currency: CurrencyUI? = null) : State(currency)
-    class Error(currency: CurrencyUI? = null) : State(currency)
-    class Success(currency: CurrencyUI) : State(currency)
+    data object None : State(currencyMap = null)
+    class Loading(currencyMap: Map<String,CurrencyUI>? = null) : State(currencyMap)
+    class Error(currencyMap: Map<String,CurrencyUI>? = null) : State(currencyMap)
+    class Success(currencyMap: Map<String,CurrencyUI>) : State(currencyMap)
 }

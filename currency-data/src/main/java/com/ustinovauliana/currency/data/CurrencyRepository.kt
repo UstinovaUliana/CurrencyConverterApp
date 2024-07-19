@@ -17,25 +17,23 @@ class CurrencyRepository @Inject constructor(
 
     fun getCurrencyValue(currency: String,
                          baseCurrency: String?
-    ): Flow<RequestResult<CurrencyRepoObj>> {
+    ): Flow<Map<String, CurrencyRepoObj>> {
         val apiRequest =  flow {
             emit(api.getLatest(currency = currency, baseCurrency = baseCurrency))
         }
-            .map {
-                Log.d("curdebug", "Repo: toreqres data:" + it.toRequestResult().data.toString())
 
-                it.toRequestResult()
-            }
-
-
-        val start = flowOf<RequestResult<ResponseDTO>>(RequestResult.InProgress())
+        val start = flowOf<ResponseDTO>()
         return merge(apiRequest, start)
-            .map { result ->
-                Log.d("curdebug", "Repo: result data:" + result.data.toString())
-                result.map {
-                    it.toCurrencyRepoObj()
-                }
+            .map { responseDto ->
+                Log.d("curdebug", "Repo: result data:" + responseDto.data.toString())
+
+                responseDto.data.map { (key, value) ->
+                    Log.d("curdebug", "Repo: result data:" + value.toCurrencyRepoObj().toString())
+
+                   key to value.toCurrencyRepoObj()
+                }.toMap()
             }
+
     }
 
 }
