@@ -25,11 +25,7 @@ class CurrencyRepository @Inject constructor(
         val start = flowOf<ResponseDTO>()
         return merge(apiRequest, start)
             .map { responseDto ->
-                Log.d("curdebug", "Repo: result data:" + responseDto.data.toString())
-
                 responseDto.data.map { (key, value) ->
-                    Log.d("curdebug", "Repo: result data:" + value.toCurrencyRepoObj().toString())
-
                    key to value.toCurrencyRepoObj()
                 }.toMap()
             }

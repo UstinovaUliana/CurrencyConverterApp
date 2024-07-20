@@ -12,14 +12,12 @@ internal class GetCurrencyValueUseCase @Inject constructor(private val repositor
    operator fun invoke(baseCurrency: String?, currency: String): Flow<Map<String, CurrencyUI>> {
         return repository.getCurrencyValue(baseCurrency = baseCurrency, currency = currency)
             .map { responseMap ->
-                Log.d("curdebug", "UseCase: responseMap:" + responseMap.toString())
                 responseMap.map { (key, value) ->
                     key to value.toCurrencyUI()
                 }.toMap()
             }
    }
 }
-
 
 private fun CurrencyRepoObj.toCurrencyUI(): CurrencyUI {
     return CurrencyUI(
