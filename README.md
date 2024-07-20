@@ -6,4 +6,4 @@
 3. If you are working on Windows, download [Git Bash for Windows](https://git-for-windows.github.io/) to get a full Unix bash with Git functionality
 4. Clone the repo to your desktop `git clone https://github.com/YOUR_USER_NAME/CurrencyConverterApp.git`
 5. Open the project with Android Studio
-6. Build a 'CurrencyConverterApp' application which is inside the base directory.
+6. Build a 'app' application which is inside the base directory.
