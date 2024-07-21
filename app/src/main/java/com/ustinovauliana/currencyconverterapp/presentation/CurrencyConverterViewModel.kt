@@ -31,7 +31,8 @@ internal class CurrencyConverterViewModel @Inject constructor(
      */
     private val _state = MutableStateFlow<State>(State.None)
     val state: StateFlow<State> get() = _state.asStateFlow()
-
+    var secondCurrencyText: String = "GBP"
+    var amount: String = "100"
     fun getCurrencyValue(currency: String, baseCurrency: String?){
         viewModelScope.launch {
             getCurrencyValueUseCase.get().invoke(currency = currency, baseCurrency = baseCurrency)
