@@ -4,15 +4,15 @@ App supports coverting money from one currency to another.
 For this app I've used https://app.currencyapi.com API. 
 
 ## Technology stack
-The source code is written in *Kotlin*. I've used *Jetpack Compose* for layout, *Retrofit* + *okHttp* for network interaction, *Kotlin Coroutines* for reactive programming, *Hilt* for dependency injection, *Clean Architecture*.
+The source code is written in *Kotlin*. I've used *Jetpack Compose* for layout, *Retrofit* + *okHttp* for network interaction, *Kotlin Coroutines* for reactive programming, *Hilt* for dependency injection, *Clean Architecture*, *detekt* for code cleanup.
 
 ## Screenshots
 
 ### Light Theme
-<img src="/screenshots/ConverterScreenLight.jpg" width="360" height="800"> <img src="/screenshots/ResultScreenDark.jpg" width="360" height="800"> 
+<img src="/screenshots/ConverterScreenLight.jpg" width="270" height="600"> <img src="/screenshots/ResultScreenDark.jpg" width="270" height="600"> 
 
 ### Dark Theme
-<img src="/screenshots/ConverterScreenDark.jpg" width="360" height="800"> <img src="/screenshots/ResultScreenLight.jpg" width="360" height="800"> 
+<img src="/screenshots/ConverterScreenDark.jpg" width="270" height="600"> <img src="/screenshots/ResultScreenLight.jpg" width="270" height="600"> 
 
 
 ## Setup for Developers
