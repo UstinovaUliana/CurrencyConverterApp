@@ -1,43 +1,30 @@
 package com.ustinovauliana.currencyconverterapp.presentation
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,26 +32,25 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import com.ustinovauliana.currencyconverterapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
-                                 navController: NavController
+internal fun ConverterMainScreen(
+    currencyViewModel: CurrencyConverterViewModel,
+    navController: NavController
 ) {
-
-    val state by currencyViewModel.state.collectAsState()
 
     var amount: String by rememberSaveable {
         mutableStateOf("100")
@@ -89,7 +75,7 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            "Convert any currency",
+            stringResource(R.string.convert_any_currency),
             fontSize = 30.sp,
             modifier = Modifier
                 .weight(0.5f)
@@ -98,8 +84,8 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
             modifier = Modifier
                 .weight(2f)
                 .padding(16.dp)
-                .border(2.dp, MaterialTheme.colorScheme.secondary, RoundedCornerShape(5.dp))
-                .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(5.dp))
+                .border(2.dp, MaterialTheme.colorScheme.secondary, RoundedCornerShape(20.dp))
+                .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(20.dp))
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround,
@@ -114,7 +100,9 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
                     },
                     Modifier
                         .weight(1f)
-                        .padding(5.dp)
+                        .padding(5.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 )
 
                 ExposedDropdownMenuBox(
@@ -124,7 +112,7 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
                     },
                     Modifier
                         .weight(1f)
-                        .padding(5.dp)
+                        .padding(5.dp),
                 ) {
                     TextField(
                         value = firstCurrencyText,
@@ -132,12 +120,13 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
                         },
                         readOnly = true,
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isFirstExpanded) },
-                        modifier = Modifier.menuAnchor()
+                        modifier = Modifier.menuAnchor(),
+                        shape = RoundedCornerShape(10.dp),
                     )
 
                     ExposedDropdownMenu(
                         expanded = isFirstExpanded,
-                        onDismissRequest = { isFirstExpanded = false }
+                        onDismissRequest = { isFirstExpanded = false },
                     ) {
                         currencies.forEach { item ->
                             DropdownMenuItem(
@@ -149,14 +138,16 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
                                         secondCurrencyText =
                                             currencies.filter { it != firstCurrencyText }[1]
                                     }
-                                }
+                                },
                             )
                         }
                     }
                 }
             }
             Text(
-                "Convert To:",
+                stringResource(R.string.convert_to),
+                fontSize = 20.sp,
+                color = MaterialTheme.colorScheme.onSecondary
             )
 
             ExposedDropdownMenuBox(
@@ -172,7 +163,9 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isSecondExpanded) },
                     modifier = Modifier
                         .menuAnchor()
-                        .weight(1f)
+                        .weight(1f),
+
+                    shape = RoundedCornerShape(10.dp),
                 )
 
                 ExposedDropdownMenu(
@@ -204,7 +197,7 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
                 )
                 currencyViewModel.secondCurrencyText = secondCurrencyText
                 currencyViewModel.amount = amount
-                navController.navigate("result") {
+                navController.navigate("Conversion Result") {
                     navController.graph.startDestinationRoute?.let { route ->
                         popUpTo(route) {
                             saveState = true
@@ -225,13 +218,14 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
                 Image(
                     painter = painterResource(id = R.drawable.exchange_svgrepo_com),
                     contentDescription = "Image",
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondary),
                     modifier = Modifier
                         .weight(2f)
                 )
                 Spacer(Modifier.size(10.dp))
 
                 Text(
-                    "Convert",
+                    stringResource(R.string.convert),
                     style = TextStyle(fontWeight = FontWeight.Bold),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -243,48 +237,3 @@ internal fun ConverterMainScreen(currencyViewModel: CurrencyConverterViewModel,
     }
 }
 
-@Composable
-internal fun ResultScreen(
-    currencyViewModel: CurrencyConverterViewModel
-) {
-    var result: String by remember { mutableStateOf("") }
-    var visibility by remember { mutableStateOf(false) }
-    val state by currencyViewModel.state.collectAsState()
-    val secondCurrencyText = currencyViewModel.secondCurrencyText
-    val amount = currencyViewModel.amount
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceAround,
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-
-        visibility = true
-        AnimatedVisibility(
-            visible = visibility,
-            enter = scaleIn(),
-            exit = scaleOut(),
-        ) {
-            when (state) {
-                is State.Success -> {
-                    var k: Float? = if (state.currencyMap != null) {
-                        val map = state.currencyMap
-                        map?.get(secondCurrencyText)?.value
-                    } else 0.25f
-                    if (k == null) k = 1f
-                    result = (amount.toFloat() * k).toString()
-                    Text(
-                        "$result $secondCurrencyText",
-                        textAlign = TextAlign.Center,
-                    )
-                }
-
-                else -> {
-                    CircularProgressIndicator()
-                }
-            }
-        }
-
-    }
-}

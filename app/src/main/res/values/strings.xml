@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CurrencyConverterApp</string>
+    <string name="convert_any_currency">Convert any currency</string>
+    <string name="convert_to">Convert To:</string>
+    <string name="convert">Convert</string>
+    <string name="the_result_is">The result is:</string>
 </resources>

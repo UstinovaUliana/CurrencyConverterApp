@@ -36,7 +36,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             val currencyViewModel: CurrencyConverterViewModel = viewModel()
             val navController = rememberNavController()
-            val navItems = listOf("main","result")
             val currentScreen by navController.currentBackStackEntryAsState()
             CurrencyConverterAppTheme {
                 Scaffold(
@@ -45,7 +44,7 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = { Text(text =currentScreen?.destination?.route?:"")},
                             navigationIcon = {
-                                if (currentScreen?.destination?.route != "main")
+                                if (currentScreen?.destination?.route != "Currency Converter")
                                     IconButton(onClick = {navController.navigateUp()}) {
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -62,11 +61,11 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(values)
                     ){
 
-                        NavHost(navController = navController, startDestination = "main") {
-                            composable("main") {
+                        NavHost(navController = navController, startDestination = "Currency Converter") {
+                            composable("Currency Converter") {
                                 ConverterMainScreen(currencyViewModel,navController)
                             }
-                            composable("result") {
+                            composable("Conversion Result") {
                                 ResultScreen(currencyViewModel)
                             }
                         }
