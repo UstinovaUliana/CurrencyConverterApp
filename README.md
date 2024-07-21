@@ -3,7 +3,7 @@
 App supports coverting money from one currency to another. 
 For this app I've used https://app.currencyapi.com API. 
 
-## Tecknology stack
+## Technology stack
 The source code is written in *Kotlin*. I've used *Jetpack Compose* for layout, *Retrofit* + *okHttp* for network interaction, *Kotlin Coroutines* for reactive programming, *Hilt* for dependency injection, *Clean Architecture*.
 
 ## Screenshots
