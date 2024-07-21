@@ -21,6 +21,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "CurrencyConverterApp"
 include(":app")
-include(":currency-api")
-include(":features-main")
-include(":currency-data")
