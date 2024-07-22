@@ -23,6 +23,7 @@ dagger = "2.50"
 ksp = "1.9.24-1.0.20"
 coil = "2.6.0"
 navigationCompose = "2.7.7"
+detekt = "1.23.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,6 +60,9 @@ dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref =
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 dagger-main = { module = "com.google.dagger:dagge2", version.ref = "dagger" }
+
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
 javax-inject = { module = "javax.inject:javax.inject", version.ref = "javax-inject" }
 
 
@@ -81,3 +85,5 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

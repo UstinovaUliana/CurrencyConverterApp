@@ -4,7 +4,6 @@ import com.ustinovauliana.currencyconverterapp.data.api.models.CurrencyPropertie
 import com.ustinovauliana.currencyconverterapp.domain.model.CurrencyRepoObj
 import com.ustinovauliana.currencyconverterapp.presentation.models.CurrencyUI
 
-
 internal fun CurrencyPropertiesDTO.toCurrencyRepoObj(): CurrencyRepoObj {
     return CurrencyRepoObj(
         code = code,

@@ -12,4 +12,3 @@ internal class CurrencyApiKeyInterceptor(private val apiKey: String) : Intercept
         )
     }
 }
-

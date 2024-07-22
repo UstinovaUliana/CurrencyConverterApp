@@ -12,7 +12,7 @@ interface CurrencyApi {
     suspend fun getLatest(
         @Query("currencies") currency: String,
         @Query("base_currency") baseCurrency: String? = null,
-    ) : ResponseDTO
+    ): ResponseDTO
 }
 
 fun CurrencyApi(
@@ -23,5 +23,3 @@ fun CurrencyApi(
 ): CurrencyApi {
     return retrofit(baseUrl, apiKey, okHttpClient, json).create(CurrencyApi::class.java)
 }
-
-

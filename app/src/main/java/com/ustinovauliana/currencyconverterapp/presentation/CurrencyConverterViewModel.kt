@@ -16,25 +16,25 @@ import javax.inject.Provider
 
 @HiltViewModel
 internal class CurrencyConverterViewModel @Inject constructor(
-    val getCurrencyValueUseCase: Provider<GetCurrencyValueUseCase>
+    private val getCurrencyValueUseCase: Provider<GetCurrencyValueUseCase>
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<State>(State.None)
     val state: StateFlow<State> get() = _state.asStateFlow()
     var secondCurrencyText: String = "GBP"
     var amount: String = "100"
-    fun getCurrencyValue(currency: String, baseCurrency: String?){
+    fun getCurrencyValue(currency: String, baseCurrency: String?) {
         viewModelScope.launch {
-                getCurrencyValueUseCase.get()
-                    .invoke(currency = currency, baseCurrency = baseCurrency)
-                    .map { it.toState() }
-                    .catch { e ->
-                        println("Exception ${e.message}")
-                        emit(State.Error(null))
-                    }
-                    .collect {
-                        _state.value = it
-                    }
+            getCurrencyValueUseCase.get()
+                .invoke(currency = currency, baseCurrency = baseCurrency)
+                .map { it.toState() }
+                .catch { e ->
+                    println("Exception ${e.message}")
+                    emit(State.Error(null))
+                }
+                .collect {
+                    _state.value = it
+                }
         }
     }
 }

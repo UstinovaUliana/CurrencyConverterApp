@@ -1,6 +1,7 @@
 package com.ustinovauliana.currencyconverterapp.di
-import com.ustinovauliana.currencyconverterapp.data.api.CurrencyApi
+
 import com.ustinovauliana.currencyconverterapp.BuildConfig
+import com.ustinovauliana.currencyconverterapp.data.api.CurrencyApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +30,5 @@ object AppModule {
             apiKey = BuildConfig.CURRENCY_API_KEY,
             okHttpClient = okHttpClient,
         )
-
     }
 }

@@ -15,7 +15,6 @@ internal fun retrofit(
     okHttpClient: OkHttpClient?,
     json: Json,
 ): Retrofit {
-
     val modifiedOkHttpClient: OkHttpClient = (okHttpClient?.newBuilder() ?: OkHttpClient.Builder())
         .addInterceptor(CurrencyApiKeyInterceptor(apiKey))
         .build()

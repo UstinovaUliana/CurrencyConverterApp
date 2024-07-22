@@ -1,6 +1,5 @@
 package com.ustinovauliana.currencyconverterapp.presentation
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,7 +11,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,28 +40,31 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         TopAppBar(
-                            title = { Text(text =currentScreen?.destination?.route?:"")},
+                            title = { Text(text = currentScreen?.destination?.route ?: "") },
                             navigationIcon = {
-                                if (currentScreen?.destination?.route != "Currency Converter")
-                                    IconButton(onClick = {navController.navigateUp()}) {
+                                if (currentScreen?.destination?.route != "Currency Converter") {
+                                    IconButton(onClick = {
+                                        navController.navigateUp()
+                                    }) {
                                         Icon(
                                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                             contentDescription = ""
                                         )
+                                    }
                                 }
                             }
-
-
                         )
                     },
                 ) { values ->
-                    Surface (
+                    Surface(
                         modifier = Modifier.padding(values)
-                    ){
-
-                        NavHost(navController = navController, startDestination = "Currency Converter") {
+                    ) {
+                        NavHost(
+                            navController = navController,
+                            startDestination = "Currency Converter"
+                        ) {
                             composable("Currency Converter") {
-                                ConverterMainScreen(currencyViewModel,navController)
+                                ConverterMainScreen(currencyViewModel, navController)
                             }
                             composable("Conversion Result") {
                                 ResultScreen(currencyViewModel)

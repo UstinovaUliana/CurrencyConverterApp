@@ -13,12 +13,13 @@ import javax.inject.Inject
 
 class CurrencyRepository @Inject constructor(
     private val api: CurrencyApi,
-)  {
+) {
 
-    fun getCurrencyValue(currency: String,
-                         baseCurrency: String?
+    fun getCurrencyValue(
+        currency: String,
+        baseCurrency: String?
     ): Flow<Map<String, CurrencyRepoObj>> {
-        val apiRequest =  flow {
+        val apiRequest = flow {
             emit(api.getLatest(currency = currency, baseCurrency = baseCurrency))
         }
 
@@ -26,10 +27,8 @@ class CurrencyRepository @Inject constructor(
         return merge(apiRequest, start)
             .map { responseDto ->
                 responseDto.data.map { (key, value) ->
-                   key to value.toCurrencyRepoObj()
+                    key to value.toCurrencyRepoObj()
                 }.toMap()
             }
-
     }
-
 }

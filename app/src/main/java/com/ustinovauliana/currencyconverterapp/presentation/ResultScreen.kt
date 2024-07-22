@@ -1,8 +1,5 @@
 package com.ustinovauliana.currencyconverterapp.presentation
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -39,33 +36,27 @@ internal fun ResultScreen(
         modifier = Modifier
             .fillMaxSize()
     ) {
-            when (state) {
-                is State.Success -> {
-                    var conversionCoefficient: Float? = if (state.currencyMap != null) {
-                        val map = state.currencyMap
-                        map?.get(secondCurrencyText)?.value
-                    } else 0.25f
-                    if (conversionCoefficient == null) conversionCoefficient = 1f
-                    result = (amount.toFloat() * conversionCoefficient).toString()
-                    Column {
-                        Text(
-                            stringResource(R.string.the_result_is),
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp
-                        )
-                        Spacer(modifier = Modifier.size(10.dp))
-                        Text(
-                            "$result $secondCurrencyText",
-                            textAlign = TextAlign.Center,
-                            fontSize = 30.sp
-                        )
-                    }
+        when (state) {
+            is State.Success -> {
+                var conversionCoefficient: Float? = state.currencyMap?.get(secondCurrencyText)?.value
+                if (conversionCoefficient == null) conversionCoefficient = 1f
+                result = (amount.toFloat() * conversionCoefficient).toString()
+                Column {
+                    Text(
+                        stringResource(R.string.the_result_is),
+                        textAlign = TextAlign.Center,
+                        fontSize = 20.sp
+                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    Text(
+                        "$result $secondCurrencyText",
+                        textAlign = TextAlign.Center,
+                        fontSize = 30.sp
+                    )
                 }
-
-                else -> {
-                    CircularProgressIndicator()
-                }
+            } else -> {
+                CircularProgressIndicator()
             }
-
+        }
     }
 }

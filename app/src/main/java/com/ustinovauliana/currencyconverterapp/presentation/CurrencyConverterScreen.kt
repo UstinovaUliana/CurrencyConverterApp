@@ -12,10 +12,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,7 +49,6 @@ internal fun ConverterMainScreen(
     currencyViewModel: CurrencyConverterViewModel,
     navController: NavController
 ) {
-
     var amount: String by rememberSaveable {
         mutableStateOf("100")
     }
@@ -72,7 +69,6 @@ internal fun ConverterMainScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = statusBarHeight.dp)
-            .verticalScroll(rememberScrollState())
     ) {
         Text(
             stringResource(R.string.convert_any_currency),
@@ -164,10 +160,8 @@ internal fun ConverterMainScreen(
                     modifier = Modifier
                         .menuAnchor()
                         .weight(1f),
-
                     shape = RoundedCornerShape(10.dp),
                 )
-
                 ExposedDropdownMenu(
                     expanded = isSecondExpanded,
                     onDismissRequest = { isSecondExpanded = false },
@@ -223,7 +217,6 @@ internal fun ConverterMainScreen(
                         .weight(2f)
                 )
                 Spacer(Modifier.size(10.dp))
-
                 Text(
                     stringResource(R.string.convert),
                     style = TextStyle(fontWeight = FontWeight.Bold),
@@ -231,9 +224,7 @@ internal fun ConverterMainScreen(
                     modifier = Modifier
                         .weight(1f)
                 )
-
             }
         }
     }
 }
-
